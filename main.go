@@ -12,6 +12,7 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/theme"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/mem"
@@ -58,13 +59,9 @@ func getActiveNetInterface() string {
 }
 
 func getSystemStats(prevDiskStats map[string]disk.IOCountersStat) (float64, float64, float64, float64, float64, float64, float64, map[string]disk.IOCountersStat) {
-	// CPU Usage
 	cpuUsage, _ := cpu.Percent(0, false)
-	// RAM Usage
 	memStats, _ := mem.VirtualMemory()
-	// Disk Usage
 	diskStats, _ := disk.Usage("/")
-	// Network Usage
 	initialStats, _ := net.IOCounters(true)
 
 	time.Sleep(time.Millisecond * 500)
@@ -87,7 +84,6 @@ func getSystemStats(prevDiskStats map[string]disk.IOCountersStat) (float64, floa
 		}
 	}
 
-	// Disk IO Counters for read/write usage
 	ioStats, _ := disk.IOCounters()
 	var readSpeed, writeSpeed float64
 	for diskName, stats := range ioStats {
@@ -96,7 +92,6 @@ func getSystemStats(prevDiskStats map[string]disk.IOCountersStat) (float64, floa
 		break
 	}
 
-	// Return read/write speeds along with other system stats
 	return cpuUsage[0], memStats.UsedPercent, diskStats.UsedPercent, netReadSpeed, netWriteSpeed, readSpeed, writeSpeed, ioStats
 }
 
@@ -150,6 +145,8 @@ func DrawGraph(title string, data []float64, graphColor color.Color) *fyne.Conta
 func main() {
 	a := app.New()
 	w := a.NewWindow("System Monitor")
+
+	a.Settings().SetTheme(theme.DarkTheme())
 
 	MAX_WIFI_SPEED = 100
 
