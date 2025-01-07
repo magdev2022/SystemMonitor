@@ -48,7 +48,7 @@ func DrawDiskGraph(r_Data []float64, w_Data []float64, diskUsage float64) *fyne.
 
 					partTotalLabel := canvas.NewText(fmt.Sprintf("Total: %v GB", usage.Total/(1024*1024*1024)), color.RGBA{20, 220, 20, 255})
 					partTotalLabel.TextSize = 11
-					partTotalLabel.Move(fyne.NewPos(340, float32(40)+float32(h)))
+					partTotalLabel.Move(fyne.NewPos(320+float32(len(partition.Device)*10), float32(40)+float32(h)))
 					graph.Add(partTotalLabel)
 
 					partUsedLabel := canvas.NewText(fmt.Sprintf("Used: %v GB", usage.Used/(1024*1024*1024)), color.RGBA{220, 20, 20, 255})
