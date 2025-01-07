@@ -1,0 +1,6 @@
+[Details]
+  Icon = "icon.png"
+  Name = "SystemMonitor.exe"
+  ID = "com.magdev.app"
+  Version = "1.0"
+  Build = 2
