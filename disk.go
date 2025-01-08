@@ -40,25 +40,26 @@ func DrawDiskGraph(r_Data []float64, w_Data []float64, diskUsage float64) *fyne.
 				// Get usage statistics for each partition
 				usage, err := disk.Usage(partition.Mountpoint)
 				if err == nil {
-					// Print partition info
-					partNameLabel := canvas.NewText(partition.Device, color.White)
-					partNameLabel.TextSize = 11
-					partNameLabel.Move(fyne.NewPos(320, float32(40)+float32(h)))
-					graph.Add(partNameLabel)
+					if usage.Total > 1024 {
+						// Print partition info
+						partNameLabel := canvas.NewText(partition.Device, color.White)
+						partNameLabel.TextSize = 11
+						partNameLabel.Move(fyne.NewPos(320, float32(40)+float32(h)))
+						graph.Add(partNameLabel)
 
-					partTotalLabel := canvas.NewText(fmt.Sprintf("Total: %v GB", usage.Total/(1024*1024*1024)), color.RGBA{20, 220, 20, 255})
-					partTotalLabel.TextSize = 11
-					point_x := 320 + partNameLabel.MinSize().Width + 10
-					partTotalLabel.Move(fyne.NewPos(point_x, float32(40)+float32(h)))
-					graph.Add(partTotalLabel)
+						partTotalLabel := canvas.NewText(fmt.Sprintf("Total: %v GB", usage.Total/(1024*1024*1024)), color.RGBA{20, 220, 20, 255})
+						partTotalLabel.TextSize = 11
+						point_x := 320 + partNameLabel.MinSize().Width + 10
+						partTotalLabel.Move(fyne.NewPos(point_x, float32(40)+float32(h)))
+						graph.Add(partTotalLabel)
 
-					partUsedLabel := canvas.NewText(fmt.Sprintf("Used: %v GB", usage.Used/(1024*1024*1024)), color.RGBA{220, 20, 20, 255})
-					partUsedLabel.TextSize = 11
-					point_x = point_x + partTotalLabel.MinSize().Width + 10
-					partUsedLabel.Move(fyne.NewPos(point_x, float32(40)+float32(h)))
-					graph.Add(partUsedLabel)
-
-					h = h + 20
+						partUsedLabel := canvas.NewText(fmt.Sprintf("Used: %v GB", usage.Used/(1024*1024*1024)), color.RGBA{220, 20, 20, 255})
+						partUsedLabel.TextSize = 11
+						point_x = point_x + partTotalLabel.MinSize().Width + 10
+						partUsedLabel.Move(fyne.NewPos(point_x, float32(40)+float32(h)))
+						graph.Add(partUsedLabel)
+						h = h + 20
+					}
 				}
 			}
 		}
