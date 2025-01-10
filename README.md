@@ -17,3 +17,7 @@ To install and run the application, follow the steps below:
 
 - Go (version 1.18 or higher)
 - Fyne package for Go
+
+ScreenShot
+
+![Screenhost](https://lewjusutjatzetilkovb.supabase.co/storage/v1/object/public/Images/monitor.png)
